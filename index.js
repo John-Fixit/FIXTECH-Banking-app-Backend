@@ -28,12 +28,11 @@ mongoose.connect(URI, (err)=>{
     }
 })
 
-
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 4000
+app.use('/api', userRouter)
 app.get('/*', (req, res) => {
     res.sendFile(__dirname + "/Fixtech/index.html");
 })
-app.use('/api', userRouter)
 // app.use('/admin')
 
 app.listen(PORT, ()=>{
