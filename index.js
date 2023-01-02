@@ -18,6 +18,7 @@ app.use(cors(
         credentials: true
     }
 ))
+app.use(express.static(__dirname + "/Fixtech"))
 mongoose.connect(URI, (err)=>{
     if(err){
         console.log(`Mongoose not connect`);
@@ -29,6 +30,9 @@ mongoose.connect(URI, (err)=>{
 
 
 const PORT = process.env.PORT
+app.get('/*', (req, res) => {
+    res.sendFile(__dirname + "/Fixtech/index.html");
+})
 app.use('/', userRouter)
 // app.use('/admin')
 
