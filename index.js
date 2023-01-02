@@ -33,7 +33,7 @@ const PORT = process.env.PORT
 app.get('/*', (req, res) => {
     res.sendFile(__dirname + "/Fixtech/index.html");
 })
-app.use('/', userRouter)
+app.use('/api', userRouter)
 // app.use('/admin')
 
 app.listen(PORT, ()=>{
