@@ -52,16 +52,25 @@ const signup = (req, res) => {
         });
       } else {
         const form = new userModel(req.body);
-        form.save((err) => {
+        form.save((err, data) => {
           if (err) {
             res.json({
               message: `Network error, please try again!`,
               status: false,
             });
           } else {
-            // client.messages
-            // .create({ body: `Your FICOM account Number is ${req.body.accountNumber}`, from: process.env.PHONE_NUMBER, to: "+2349160261836" })
-            // .then((message) => console.log(message.body));
+            client.messages.create({
+              body: `Congratulations! your FIXTECH account has been successfully created.
+              Your account number is ${data.accountNumber}. FIXTECH, it's a simple, fast and secure bank app.</p>`,
+              from: process.env.PHONE_NUMBER,
+              // to: data.phoneNumber
+              to: '+2349160261836'
+            }).then((result)=>{
+              console.log(result)
+            }).catch((err)=>{
+              console.log(err)
+            })
+            
             const mailMessage = {
               from: "FIXTECH",
               to: req.body.email,
