@@ -16,4 +16,5 @@ userRouter.post('/topUpWithCard', userController.topUpWithCard)
 userRouter.get('/checkUser/:id', userController.checkUser)
 userRouter.post('/editProfile/:id', userController.editProfile)
 userRouter.get('/statisticData/:id', userController.getMonthlyTransactionStat)
+userRouter.get('/sendSms', userController.sendSms)
 module.exports = userRouter

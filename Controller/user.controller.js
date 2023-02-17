@@ -51,6 +51,39 @@ const signup = (req, res) => {
           status: false,
         });
       } else {
+        const mailMessage = {
+          from: "FIXTECH",
+          to: req.body.email,
+          subject: "Registration successfull",
+          html: `<b class='card-title'>Dear ${req.body.firstname} ${req.body.lastname},</b>
+                        <p >Welcome to FIXTECH app!</p>
+                        <p >Congratulations! your account has been successfully created.</p>
+                        <p >Your account number is ${req.body.accountNumber}. FIXTECH, it's a simple, fast and secure bank app.</p>
+                        <p>click on this <a href='https://fixtech-lac.vercel.app/login'>LINK</a> to sign in to your account.
+                        Thank you!`,
+        };
+        // transporter.sendMail(mailMessage, (err, result) => {
+        //   if (err) {
+        //     console.log(err.code)
+        //       err.code == "EENVELOPE"? res.json({
+        //           message:
+        //             "Email entered is invalid, please enter a valid email!",
+        //           status: false,
+        //         }):
+        //     res.json({
+        //       message:
+        //         "Network error occurred, please check your connection and try again!",
+        //       status: false,
+        //     });
+        //   } else {
+            
+        //     // res.json({
+        //     //   message: `User registered successfully, your account Number has been sent to ${req.body.email}`,
+        //     //   status: true,
+        //     // });
+        //   }
+        // });
+
         const form = new userModel(req.body);
         form.save((err, data) => {
           if (err) {
@@ -503,6 +536,37 @@ const getMonthlyTransactionStat = (req, res) => {
       });
     });
 };
+
+const sendSms = (req, res)=>{
+    // client.messages.create({
+    //   body: "John Fixit is send you SMS message from FIXTECH",
+    //   from: process.env.PHONE_NUMBER,
+    //   to: '+2348146549116'
+    // }).then((result)=>{
+    //   console.log(result)
+    //   res.send(result)
+    // }).catch((err)=>{
+    //   console.log(err)
+    //     res.send(err)
+    // })
+
+    var messagebird = require('messagebird')('rjBcopvw9SegTjVfrWZQBQDy6');
+
+    var params = {
+      'originator': 'TestMessage',
+      'recipients': [
+        '09160261836'
+    ],
+      'body': 'This is a test message'
+    };
+
+    messagebird.messages.create(params, function (err, response) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(response);
+    });
+}
 module.exports = {
   getRes,
   signup,
@@ -516,4 +580,5 @@ module.exports = {
   checkUser,
   editProfile,
   getMonthlyTransactionStat,
+  sendSms
 };
